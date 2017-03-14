@@ -1,16 +1,22 @@
 import React from 'react';
 import ReactRouter, { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import App from './../components/App';
-import TodolistContainer from '../container/TodolistContainer';
-import LoginContainer from '../container/LoginContainer';
+import TodoContainer from '../container/TodoContainer';
+import UserContainer from '../container/UserContainer';
 
 var routes = (
     <Router history={browserHistory} >
         <Route path='/' component={App}>
-            <IndexRoute component={LoginContainer} />
-            <Route path ='todo' component={TodolistContainer} />
+            <IndexRoute component={UserContainer} />
+            <Route path ='todo' component={TodoContainer}/>
+            <Route path ='register' component={UserContainer}/>
+            <Route path ='login' component={UserContainer}/>
+            <Route path ='todo/:mode' component={TodoContainer}/>
         </Route>
     </Router>
 )
 
 export default routes;
+
+
+

@@ -8,11 +8,11 @@ class TodoList extends Component {
     this.state = {
       groceries: [
         {
-          name: "Review",
+          name: "Apples",
           completed: false
         },
         {
-          name: "Do homework",
+          name: "Patis",
           completed: true
         }
       ],
@@ -69,9 +69,9 @@ class TodoList extends Component {
     }
 
     newProductInput = <input className='new-item' type="text" onChange={this.inputChanged}/>;
-    newProductAddButton = <button className='add-product' onClick={this.addTodoItem}>Add </button>;
+    newProductAddButton = <button className='add-product' onClick={this.addTodoItem}>Add new todo</button>;
     clearListButton = <button className='clear-list' onClick={this.clearList}>Clear the List</button>;
-    let title = `My To Do List (${this.state.completedCount}/${this.state.groceries.length})`
+    let title = `Todo List (${this.state.completedCount}/${this.state.groceries.length})`
     return (
       <div className='grocery-list'>
         <h3> {title} </h3>

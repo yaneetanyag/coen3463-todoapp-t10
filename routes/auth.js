@@ -42,7 +42,6 @@ router.route('/register')
 
 router.get('/getUser', (req, res)=>{
   const user = req.user;
-  console.log(user);
   res.json({
     response: user
   });

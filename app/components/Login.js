@@ -1,21 +1,20 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
+import './App.css';
 import AuthApi from '../api/AuthApi';
-import './App.css'
 
 class Login extends Component {
-  constructor(props) {
-  super(props);
-    this.state={
-      count: 0,
-      username: "",
-      user:"",
-      error: "",
+    constructor(props,context) {
+      super(props,context);
+        this.state={
+          username: "",
+          user:"",
+          error: "",
+        }
+        this.onLogin = this.onLogin.bind(this)
+        
     }
-    this.onLogin = this.onLogin.bind(this)
-  }
 
-  
-  onLogin(e){
+    onLogin(e){
         e.preventDefault();
         let data = {
             username: this.refs.username.value,
@@ -29,8 +28,8 @@ class Login extends Component {
                 user: res.data.response._id,
                 username: data.response.username,
               });
-              window.location = data.redirect;  
-
+              this.context.router.push('/todo');
+              // window.location = data.redirect;
               console.log(data);
               return;
             }else{
@@ -46,13 +45,12 @@ class Login extends Component {
         });
        
     }
-
-
-  render() {
+    
+    render(){
     return (
       <div className="counter">
-          <p>{this.state.user}</p>
-          {this.state.user?<p>{this.state.username}</p>:<p>{this.state.error}</p>}
+          {this.state.error}
+          <br/>
           <label>username</label>
           <input type="text" placeholder="" ref="username">
           </input>
@@ -60,14 +58,15 @@ class Login extends Component {
           <label>password</label>
           <input type="password" placeholder="" ref="password"> 
           </input>
+          <br/>
+          <button onClick={this.onLogin} value="Login">Login</button>
           
-          {this.state.username? <button href={'/'} value="Log Out">Log out</button>
-          :<button onClick={this.onLogin} value="Register">Login</button> }
           
-        
-
       </div>
     )
   }
 }
+Login.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 export default Login;

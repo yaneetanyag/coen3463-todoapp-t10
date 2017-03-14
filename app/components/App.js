@@ -1,23 +1,31 @@
 import React from 'react'
 import './App.css';
-import TodoList from './TodoList.js';
-import Counter from './Counter';
 
 class App extends React.Component{
-	
+    constructor(props) {
+    super(props);
+    
+    }
     render(){
         return(
-            <div>
-                <div>
-                    <p>Hello World!</p>
+            <div className="App-section">
+                <div className="App-header">
+                    <p>Hello todo!</p>
+                    
                 </div>
-                 <div>
-                  {this.props.children}
-                 </div>
-                
+
+                {this.props.children}
             </div>
         );
     }
 }
 
+App.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
+
 export default App;
+
+//header
+    //body
+//footeer

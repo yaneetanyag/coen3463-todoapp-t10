@@ -13,7 +13,7 @@ const todoSchema = new Schema({
     createDate: {type: Date},
     completeDate: {type: Date, default: null},
     isCompleted: {type: Boolean, default: false}
-});
+},{ collection: 'todo' });
 
 
 module.exports = mongoose.model('Todo', todoSchema);

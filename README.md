@@ -1,7 +1,8 @@
-# todo-base
-base template for express w/ react 
+# coen3463-todoapp-t11
+To do list =)
 
-To run,
+Open two terminals. Go to todoapp directory and run the ff commands on each terminals:
 
-Run nodemon start on cmd.
-Run npm run watch on another cmd.
+npm run watch
+
+nodemon start

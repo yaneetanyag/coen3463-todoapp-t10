@@ -17,6 +17,7 @@ const router = express.Router();
 var index = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
+var todo = require('./routes/todo');
 
 var MongoURI = 'mongodb://admin:password@ds119380.mlab.com:19380/coen3463-todolist';
 
@@ -47,6 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 var User = require('./models/user');
+var Todo = require('./models/todolist');
 
 passport.use(User.createStrategy());
 
@@ -64,14 +66,32 @@ mongoose.connect(MongoURI, function(err, res) {
     }
 });
 
-// restify.serve(router, User);
-// app.use(router);
+restify.serve(router, Todo);
+app.use(router);
 
 app.use('/', index);
 app.use('/auth', auth);
+app.use('/todo', todo);
 app.use('/users', users);
 
+// catch 404 and forward to error handler
+// app.use(function(req, res, next) {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
 
+
+// // error handler
+// app.use(function(err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error');
+// });
 
 app.use(function (req, res, next) {
     return res.render('index');
