@@ -8,13 +8,13 @@ class App extends React.Component{
     }
     render(){
         return(
-            <div className="App-section">
+            <div>
                 <div className="App-header">
-                    <p>Hello todo!</p>
-                    
+                    <p><img src="./images/todo.png" /></p>  
                 </div>
-
+            <div className="App-section">
                 {this.props.children}
+            </div>
             </div>
         );
     }

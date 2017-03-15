@@ -8,7 +8,9 @@ class UserContainer extends React.Component{
         this.state={
             login: true
         }
-        this.switch = this.switch.bind(this)
+        this.switch = this.switch.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
+        this.handleRegister = this.handleRegister.bind(this);
     }
     switch(e){
       var laststate = this.state.login
@@ -27,21 +29,30 @@ class UserContainer extends React.Component{
             this.context.router.push('/todo');
           }
     });
+        if(this.props.routeParams.mode===undefined){
+          this.context.router.push('/login')
+        }
     }
+
+
 
     handleLogin(){
       this.context.router.push('/login');
+      console.log(this.props.routeParams.mode)
     }
     handleRegister(){
       this.context.router.push('/register');
+      
+      console.log(this.props.routeParams.mode)
     }
 
     render(){
         return(
             <User login={this.state.login} switch={this.switch}
             handleLogin={this.handleLogin}
-            handleRegister={this.handleRegister
-            }/>
+            handleRegister={this.handleRegister}
+            mode={this.props.routeParams.mode}
+            />
         )
     }
 }

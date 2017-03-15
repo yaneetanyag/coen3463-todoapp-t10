@@ -3,63 +3,43 @@ import '../components/App.css';
 import ToDos from '../components/ToDos.js';
 import Loading from './loading';
 import TodoApi from '../api/TodoApi';
+import { Button, Input, Row, Col, Icon } from 'react-materialize';
+import { Segment, Menu } from 'semantic-ui-react';
 var moment = require('moment-timezone');
-
-const services = [
-    { name: 'Web Development', price: 300 },
-    { name: 'Design', price: 400 },
-    { name: 'Integration', price: 250 },
-    { name: 'Training', price: 220 }
-];
-const libraries = [
-    { name: 'Backbone.js', url: 'http://documentcloud.github.io/backbone/'},
-    { name: 'AngularJS', url: 'https://angularjs.org/'},
-    { name: 'jQuery', url: 'http://jquery.com/'},
-    { name: 'Prototype', url: 'http://www.prototypejs.org/'},
-    { name: 'React', url: 'http://facebook.github.io/react/'},
-    { name: 'Ember', url: 'http://emberjs.com/'},
-    { name: 'Knockout.js', url: 'http://knockoutjs.com/'},
-    { name: 'Dojo', url: 'http://dojotoolkit.org/'},
-    { name: 'Mootools', url: 'http://mootools.net/'},
-    { name: 'Underscore', url: 'http://documentcloud.github.io/underscore/'},
-    { name: 'Lodash', url: 'http://lodash.com/'},
-    { name: 'Moment', url: 'http://momentjs.com/'},
-    { name: 'Express', url: 'http://expressjs.com/'},
-    { name: 'Koa', url: 'http://koajs.com/'},
-];
 
 class Todo extends React.Component{
     constructor(props,context){
         super(props,context);
         this.state={
+            isAdding: false
         }
         this.onAddTodo = this.onAddTodo.bind(this);
     }
     onAddTodo(e) {
+        this.setState({isAdding:true});
         e.preventDefault();
-        var lastState = this.props.items; //get last state of item
-        let toDo = { //create a todo object to be saved
-            name: this.refs.todo.value,
+        var lastState = this.props.items; 
+        let toDo = { 
+            name: e.target.elements[0].value,
             user: this.props.user,
             createDate: moment().tz("Asia/Manila").format('LLL'),
         }
-        this.setState({ //update items
+        this.setState({ 
             items :[...lastState,Object.assign({},toDo)]
         });
         TodoApi.onAddTodo(toDo).then(res=>{
-            //this.props.set(todo);
             console.log(res.data.response);
             if(res.data.success){
+                console.log(this.props.mode)
                 this.props.setStateItem([...lastState,Object.assign({},res.data.response)]);
                 this.props.setOriginalItems();
-                // alert("Todo added");
-                // this.setState({isLoadingItem:false});
+                if(this.props.mode==='completed'){
+                        this.props.handleSplice();                        
+                }
+                this.setState({isAdding:false});
                 return;
             }
-            //this.setState({isLoadingItem:false});
-            // toastr.error(res.data.response);
         }).catch(err=>{
-            // toastr.error('Ooops! Try again');
             console.log(err);
         }); 
     }
@@ -67,33 +47,50 @@ class Todo extends React.Component{
     render(){
     return(
         <div className="App-section">
+                <div>
+                    
+
+                </div>
                 
                 {this.props.isLoading? 
                 <Loading text="Please Wait" speed={300}/>
                 :
                 <div>
-                <p>{this.props.name}</p>
-                <p>{this.props.email}</p>
-                {this.props.onCounting? <Loading text="Loading" speed={300}/>:
-                <div>{(this.props.originalitems - this.props.completedCount)=== 1?
-                <p>{this.props.originalitems - this.props.completedCount} item left</p>:
-                <p>{this.props.originalitems - this.props.completedCount} items left</p>
-                } </div>
-                }
-                <div className="App-section">
-                <button onClick={this.props.todoAll} size="small">All</button>
-                <button onClick={this.props.todoOpen} size="small">Open</button>
-                <button onClick={this.props.todoCompleted} size="small">Completed</button>
-                <button onClick={this.props.DelAllComplete}size="small">Clear Completed</button>
+                    <p align="right">
+                        <Button waves='light' onClick={this.props.onLogOut} value="Logout">Logout</Button>
+                    </p>
+                <Segment>
+                <p>{this.props.name} | {this.props.email}</p>
+                </Segment>
+                <div className="App-list">
+                <div>
+                <Menu pointing secondary>
+                  <Menu.Item name='all' active={this.props.activeItem === 'all'} onClick={this.props.todoAll} />
+                  <Menu.Item name='open' active={this.props.activeItem === 'open'} onClick={this.props.todoOpen} />
+                  <Menu.Item name='completed' active={this.props.activeItem === 'completed'} onClick={this.props.todoCompleted} />
+                  <Menu.Menu position='right'>
+                    <Menu.Item name='Clear Completed' onClick={this.props.DelAllComplete} />
+                  </Menu.Menu>
+                </Menu>
+
+              </div>
+                <div className="App-input">
                 <form onSubmit={this.onAddTodo}>
-                    <input placeholder="Add a To Do item." ref="todo"/>
-                    <button type="submit" size="small">+</button>
+                    <Input id="id" placeholder="What needs to be done?" ref="todo"/>
+                    <Button floating className='gray' waves='light' icon='add' type='submit'></Button>
                 </form>
+                </div>
                 </div>
                 <div className="App-section">
                 {this.props.onUpdate? <Loading text="Loading" speed={300}/>:
                 <div>
                 <ul>
+                {this.props.onCounting? <Loading text="Loading" speed={300}/>:
+                <div>{(this.props.originalitems - this.props.completedCount)=== 1?
+                <p>{this.props.originalitems - this.props.completedCount}/{this.props.originalitems} item left</p>:
+                <p>{this.props.originalitems - this.props.completedCount}/{this.props.originalitems} items left</p>
+                } </div>
+                }
                 {this.props.items.map((item, index)=>
 
                     <ToDos key={index}
@@ -106,8 +103,6 @@ class Todo extends React.Component{
                 </div>
                 }
                 </div>
-                <br/>
-                <button onClick={this.props.onLogOut} value="Logout">Logout</button>
                 </div>
                 }
         </div>

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import AuthApi from '../api/AuthApi';
+import { Button, Input, Row, Col, Icon } from 'react-materialize';
 
 class Register extends Component {
   constructor(props) {
@@ -68,11 +69,11 @@ class Register extends Component {
         //     return;
         // }
         let data={
-            username: this.refs.username.value,
-            password: this.refs.password.value,
-            first_name: this.refs.first_name.value,
-            last_name: this.refs.last_name.value,
-            email: this.refs.email.value,
+            username: e.target.elements[0].value,
+            password: e.target.elements[1].value,
+            first_name: e.target.elements[2].value,
+            last_name: e.target.elements[3].value,
+            email: e.target.elements[4].value,
         }
         AuthApi.onRegister(data).then((res)=>{
             console.log(res.data); //access data here //check the console
@@ -100,30 +101,21 @@ class Register extends Component {
   render() {
     return (
       <div className="counter">
+      <form onSubmit={this.onRegister}>
           <p>{this.state.emailerror}</p>
           <p>{this.state.error}</p>
-          <label>username</label>
-          <input type="text" placeholder="" ref="username">
-          </input>
+          <Row>
+          <Input type="text" placeholder="" ref="first_name" label="First Name" /> 
+          <Input type="text" placeholder="" ref="last_name" label="Last Name" /> 
+          </Row>
+          <Input type="text" placeholder="" ref="username" label="username" />
           <br/>
-          <label>password</label>
-          <input type="password" placeholder="" ref="password"> 
-          </input>
+          <Input type="password" placeholder="" ref="password" label="password" />
           <br/>
-          <label>First name</label>
-          <input type="text" placeholder="" ref="first_name"> 
-          </input>
+          <Input type="email" placeholder="" ref="email" onKeyPress={this.onEmail} label="Email" /> 
           <br/>
-          <label>Last name</label>
-          <input type="text" placeholder="" ref="last_name"> 
-          </input>
-          <br/>
-          <label>Email</label>
-          <input type="text" placeholder="" ref="email" onKeyPress={this.onEmail} > 
-          </input>
-          <br/>
-          <button onClick={this.onRegister} value="Register">Register</button>
-
+          <Button waves='light' type='submit' value="Register">Register</Button>
+      </form>
       </div>
     )
   }

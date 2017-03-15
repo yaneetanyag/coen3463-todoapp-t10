@@ -9,7 +9,7 @@ class TodoContainer extends React.Component{
     constructor(props,context){
         super(props,context);
         this.state={
-        	user:'',
+            user:'',
             email: '',
             username: '',
             isLoading: true,
@@ -19,6 +19,7 @@ class TodoContainer extends React.Component{
             isCounting: true,
             completedCount: 0,
             originalitems: 0,
+            activeItem: 'all',
         }
         this.onLogout = this.onLogout.bind(this);
         this.handleSetStateItem =  this.handleSetStateItem.bind(this);
@@ -29,13 +30,14 @@ class TodoContainer extends React.Component{
         this.OnDelete = this.OnDelete.bind(this);
         this.handleitems = this.handleitems.bind(this);
         this.DelAllComplete = this.DelAllComplete.bind(this);
+        this.handleSplice = this.handleSplice.bind(this);
     }
 
     componentDidMount(){
         let lastUserState = this.state.user;
         let lastItemState = this.state.items;
         if(lastUserState!==''){
-            return;	
+            return; 
         }else{
             AuthApi.onGetUser().then((res)=>{
                 if(res.data.response){
@@ -49,7 +51,7 @@ class TodoContainer extends React.Component{
                     .then((mytodo)=>{
                         this.setState({
                             items:[...lastItemState,...mytodo],
-                            isUpdating: false,
+                            
                             originalitems: mytodo.length,
                         })
                     });
@@ -58,6 +60,7 @@ class TodoContainer extends React.Component{
                         this.setState({
                             completedCount: mytodo.length,
                             isCounting: false,
+                            isUpdating: false,
                         })
                     });
                 }else{
@@ -73,6 +76,7 @@ class TodoContainer extends React.Component{
             console.log(res);
             console.log("Logout Success!")
             this.context.router.push('/');  
+            // window.location = '/';
         }).catch((err)=>{
           console.log(err);
         });  
@@ -80,6 +84,10 @@ class TodoContainer extends React.Component{
 
     handleSetStateItem(value){
         this.setState({items:value});
+    }
+
+    handleSplice(){
+        this.state.items.splice(this.state.completedCount,1)
     }
 
     handleitems(){
@@ -146,7 +154,9 @@ class TodoContainer extends React.Component{
             .then(mytodo=>{
             console.log(mytodo)
             this.setState({isUpdating:false,
-                        items: [...mytodo]});
+                        items: [...mytodo],
+                        originalitems: this.state.originalitems - this.state.completedCount,
+                        completedCount: 0,});
             });
         })
         .catch(err=>{
@@ -156,19 +166,22 @@ class TodoContainer extends React.Component{
     }
 
     todoOpen(){
-        this.setState({isUpdating:true});
+        this.setState({isUpdating:true,
+                        activeItem:'open'});
         this.context.router.push('/todo/open');
         TodoApi.onGetOpen(this.state.user)
         .then(mytodo=>{
             this.setState({isUpdating:false,
-                        items: [...mytodo]});
+                        items: [...mytodo]}
+                        );
         }).catch(err=>{
             console.log(err)
         });
     }
 
     todoAll(){
-        this.setState({isUpdating:true});
+        this.setState({isUpdating:true,
+                        activeItem:'all'});
         this.context.router.push('/todo/all');
         TodoApi.onGetTodo(this.state.user)
         .then(mytodo=>{
@@ -180,7 +193,8 @@ class TodoContainer extends React.Component{
     }
 
     todoCompleted(){
-        this.setState({isUpdating:true});
+        this.setState({isUpdating:true,
+                        activeItem:'completed'});
         this.context.router.push('/todo/completed');
         TodoApi.onGetCompleted(this.state.user)
         .then(mytodo=>{
@@ -213,6 +227,9 @@ class TodoContainer extends React.Component{
                 onCounting={this.state.isCounting}
                 setOriginalItems={this.handleitems}
                 DelAllComplete={this.DelAllComplete}
+                activeItem={this.state.activeItem}
+                mode={this.props.routeParams.mode}
+                handleSplice={this.handleSplice}
             />
             </div>
         )

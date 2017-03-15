@@ -29,7 +29,10 @@
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-materialize": "^0.18.1",
     "react-router": "^3.0.2",
+    "semantic-ui-css": "^2.2.9",
+    "semantic-ui-react": "^0.67.1",
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
