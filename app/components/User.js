@@ -4,24 +4,40 @@ import Login from '../components/Login.js';
 import Register from '../components/Register.js';
 import { Button, Row, Col, Icon } from 'react-materialize';
 
-import { Menu } from 'semantic-ui-react';
+import { Menu, Segment } from 'semantic-ui-react';
 
 function User(props){
     return(
-        <div>
-            <Menu color={'grey'} widths={3}>
-                <Menu.Item name='login' active={props.mode === 'login'} onClick={props.handleLogin} />
-                <Menu.Item name='register' active={props.mode === 'register'} onClick={props.handleRegister} />
-              </Menu>
+        <div className="App-section">
+            <Menu attached='top' size='large'>
+              <Menu.Item
+                name='login'
+                active={props.mode === 'login'}
+                onClick={props.handleLogin} 
+              >
+                Login
+              </Menu.Item>
+
+              <Menu.Item
+                name='register'
+                active={props.mode === 'register'}
+                onClick={props.handleRegister}
+              >
+                Register
+              </Menu.Item>
+            </Menu>
+
+            <Segment attached>
               {props.mode === 'login'?
-                <div className="App-section" >
+                <div>
                     <Login/>   
                 </div>
                 :
-                <div className="App-section" >                  
+                <div>                 
                     <Register />
                 </div>
                 }
+            </Segment>
         </div>
     );
 }

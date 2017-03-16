@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import './App.css';
 import AuthApi from '../api/AuthApi';
-import { Button, Input, Row, Col, Icon } from 'react-materialize';
+import { Button, Input, Row } from 'react-materialize';
 
 class Login extends Component {
     constructor(props,context) {

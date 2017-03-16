@@ -10,6 +10,7 @@
   margin-top: 25px;
   margin-left: 250px;
   margin-right: 250px;
+  margin-bottom: 25px;
 }
 
 .App-list{
@@ -24,6 +25,7 @@
 
 .App-input{
   margin-top: 20px;
+  font-size: 30px;
 }
 
 .App-header {

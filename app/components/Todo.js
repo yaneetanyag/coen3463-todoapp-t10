@@ -3,8 +3,8 @@ import '../components/App.css';
 import ToDos from '../components/ToDos.js';
 import Loading from './loading';
 import TodoApi from '../api/TodoApi';
-import { Button, Input, Row, Col, Icon } from 'react-materialize';
-import { Segment, Menu } from 'semantic-ui-react';
+import { Button, Input } from 'react-materialize';
+import { Segment, Menu, Header, List } from 'semantic-ui-react';
 var moment = require('moment-timezone');
 
 class Todo extends React.Component{
@@ -47,21 +47,21 @@ class Todo extends React.Component{
     render(){
     return(
         <div className="App-section">
-                <div>
-                    
 
-                </div>
-                
                 {this.props.isLoading? 
                 <Loading text="Please Wait" speed={300}/>
                 :
                 <div>
-                    <p align="right">
-                        <Button waves='light' onClick={this.props.onLogOut} value="Logout">Logout</Button>
-                    </p>
-                <Segment>
-                <p>{this.props.name} | {this.props.email}</p>
+                <Segment clearing>
+                    <Header as='h3' floated='right'>
+                      <Button waves='light' onClick={this.props.onLogOut} value="Logout">Logout</Button>
+                    </Header>
+                    <Header as='h3' floated='left'>
+                      <p>Hello {this.props.name}
+                      <br/> {this.props.email}</p>
+                    </Header>
                 </Segment>
+
                 <div className="App-list">
                 <div>
                 <Menu pointing secondary>
@@ -78,19 +78,22 @@ class Todo extends React.Component{
                 <form onSubmit={this.onAddTodo}>
                     <Input id="id" placeholder="What needs to be done?" ref="todo"/>
                     <Button floating className='gray' waves='light' icon='add' type='submit'></Button>
+                    <br/>
                 </form>
                 </div>
                 </div>
-                <div className="App-section">
+                <div>
                 {this.props.onUpdate? <Loading text="Loading" speed={300}/>:
                 <div>
-                <ul>
+                
                 {this.props.onCounting? <Loading text="Loading" speed={300}/>:
                 <div>{(this.props.originalitems - this.props.completedCount)=== 1?
                 <p>{this.props.originalitems - this.props.completedCount}/{this.props.originalitems} item left</p>:
                 <p>{this.props.originalitems - this.props.completedCount}/{this.props.originalitems} items left</p>
                 } </div>
                 }
+
+                <List celled>
                 {this.props.items.map((item, index)=>
 
                     <ToDos key={index}
@@ -99,7 +102,7 @@ class Todo extends React.Component{
                             onComplete={this.props.onComplete}
                             OnDelete={this.props.OnDelete}/>
                 )}
-                </ul>
+                </List>
                 </div>
                 }
                 </div>

@@ -104,10 +104,10 @@ class Register extends Component {
       <form onSubmit={this.onRegister}>
           <p>{this.state.emailerror}</p>
           <p>{this.state.error}</p>
-          <Row>
           <Input type="text" placeholder="" ref="first_name" label="First Name" /> 
+          <br/>
           <Input type="text" placeholder="" ref="last_name" label="Last Name" /> 
-          </Row>
+          <br/>
           <Input type="text" placeholder="" ref="username" label="username" />
           <br/>
           <Input type="password" placeholder="" ref="password" label="password" />
