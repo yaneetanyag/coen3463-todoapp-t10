@@ -129,12 +129,14 @@ class TodoContainer extends React.Component{
                 this.setState({
                     items: [...lastItemState],
                     isUpdating: false,
+                    originalitems: this.state.originalitems - 1,
+                    completedCount: this.state.completedCount - 1,
                 });
                 }else{
                 this.setState({
                     items: [...lastItemState],
                     isUpdating: false,
-                    originalitems: this.state.originalitems - 1
+                    originalitems: this.state.originalitems - 1,
                 });
                 }
                 return;
