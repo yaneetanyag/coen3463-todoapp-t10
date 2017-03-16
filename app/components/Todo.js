@@ -78,7 +78,6 @@ class Todo extends React.Component{
                 <form onSubmit={this.onAddTodo}>
                     <Input id="id" placeholder="What needs to be done?" ref="todo"/>
                     <Button floating className='gray' waves='light' icon='add' type='submit'></Button>
-                    <br/>
                 </form>
                 </div>
                 </div>
