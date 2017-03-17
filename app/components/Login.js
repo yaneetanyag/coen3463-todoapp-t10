@@ -18,8 +18,6 @@ class Login extends Component {
       console.log(e.target)
         e.preventDefault();
         let data = {
-            // username: this.refs.username.value,
-            // password: this.refs.password.value,
             username: e.target.elements[0].value,
             password: e.target.elements[1].value,
         }
@@ -32,7 +30,6 @@ class Login extends Component {
                 username: data.response.username,
               });
               this.context.router.push('/todo');
-              // window.location = data.redirect;
               console.log(data);
               return;
             }else{

@@ -86,9 +86,9 @@ class Todo extends React.Component{
                 <div>
                 
                 {this.props.onCounting? <Loading text="Loading" speed={300}/>:
-                <div>{(this.props.originalitems - this.props.completedCount)=== 1?
-                <p>{this.props.originalitems - this.props.completedCount}/{this.props.originalitems} item left</p>:
-                <p>{this.props.originalitems - this.props.completedCount}/{this.props.originalitems} items left</p>
+                <div>{(this.props.completedCount)=== 1?
+                <p>{this.props.completedCount}/{this.props.originalitems} item/s completed</p>:
+                <p>{this.props.completedCount}/{this.props.originalitems} item/s completed</p>
                 } </div>
                 }
 
