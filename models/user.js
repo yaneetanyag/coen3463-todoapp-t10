@@ -7,7 +7,7 @@ var User = new Schema({
 	username: {
 		type: String,
         required: [true,'Username is required.'],
-        minlength: [8, 'Username must be atleast 8 characters.'],
+        minlength: [4, 'Username must be atleast 8 characters.'],
 		validate: {
         validator: function(a) {
             return /^[a-zA-z]{1,}$/.test(a);
