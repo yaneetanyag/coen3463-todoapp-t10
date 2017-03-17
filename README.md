@@ -1,8 +1,1 @@
-# coen3463-todoapp-t11
-To do list =)
-
-Open two terminals. Go to todoapp directory and run the ff commands on each terminals:
-
-npm run watch
-
-nodemon start
+COEN 3463 TO DO APP
